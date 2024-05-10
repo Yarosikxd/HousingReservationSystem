@@ -1,0 +1,6 @@
+@HousingReservationSystemApi_HostAddress = http://localhost:5069
+
+GET {{HousingReservationSystemApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
