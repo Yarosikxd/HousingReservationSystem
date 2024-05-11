@@ -1,4 +1,5 @@
 using HousingReservationSystemApi.Midllewares;
+using HousingReservationSystemApplication.Interfaces;
 using HousingReservationSystemApplication.Services;
 using HousingReservationSystemDataAccess;
 using HousingReservationSystemDataAccess.Repositoryes;
@@ -22,6 +23,11 @@ builder.Services.AddDbContext<DataBaseDbContext>(options =>
 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
+builder.Services.AddScoped<AccommodationService>();
 builder.Services.AddScoped<IUserRepository, UsersRepository>();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
 builder.Services.AddScoped<UserService>();
