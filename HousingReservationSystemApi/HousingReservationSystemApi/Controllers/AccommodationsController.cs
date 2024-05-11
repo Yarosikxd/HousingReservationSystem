@@ -1,5 +1,5 @@
 ﻿using HousingReservationSystemApi.Contracts.Accommodation;
-using HousingReservationSystemApplication.Services;
+using HousingReservationSystemApplication.Interfaces;
 using HousingReservationSystemDomain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +9,9 @@ namespace HousingReservationSystemApi.Controllers
     [Route("api/[controller]")]
     public class AccommodationsController : ControllerBase
     {
-        private readonly AccommodationService _accommodationService;
+        private readonly IAccommodationService _accommodationService;
 
-        public AccommodationsController(AccommodationService accommodationService)
+        public AccommodationsController(IAccommodationService accommodationService)
         {
             _accommodationService = accommodationService;
         }

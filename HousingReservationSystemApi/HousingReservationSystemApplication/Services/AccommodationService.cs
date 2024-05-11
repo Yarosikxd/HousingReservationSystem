@@ -1,9 +1,10 @@
-﻿using HousingReservationSystemDomain.Abstraction.Repository;
+﻿using HousingReservationSystemApplication.Interfaces;
+using HousingReservationSystemDomain.Abstraction.Repository;
 using HousingReservationSystemDomain.Models;
 
 namespace HousingReservationSystemApplication.Services
 {
-    public class AccommodationService
+    public class AccommodationService: IAccommodationService
     {
         private readonly IAccommodationRepository _repository;
 

@@ -19,25 +19,44 @@ namespace HousingReservationSystemDataAccess.Repositoryes
 
         public async Task AddUserAsync(User user)
         {
-            var userEntity = new UserEntity()
+            try
             {
-                Id = user.Id,
-                UserName = user.UserName,
-                PasswordHash = user.PasswordHash,
-                Email = user.Email,
-            };
-            
-            await _context.Users.AddAsync(userEntity);
-            await _context.SaveChangesAsync();
+                var userEntity = new UserEntity()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    PasswordHash = user.PasswordHash,
+                    Email = user.Email,
+                };
+
+                await _context.Users.AddAsync(userEntity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to add user", ex);
+            }
         }
 
         public async Task<User> GetByEmailUserAsync(string email)
         {
-            var userEntity = await _context.Users
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Email == email) ?? throw new Exception();
+            try
+            {
+                var userEntity = await _context.Users
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.Email == email);
 
-            return _mapper.Map<User>(userEntity);
+                if (userEntity == null)
+                {
+                    throw new Exception($"User with email '{email}' not found");
+                }
+
+                return _mapper.Map<User>(userEntity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to get user by email '{email}'", ex);
+            }
         }
     }
 }

@@ -28,9 +28,9 @@ namespace HousingReservationSystemApplication.Services
             return await _repository.GetAllBookingsAsync();
         }
 
-        public async Task<Guid> UpdateBookingAsync(Guid id, Booking booking)
+        public async Task<Guid> UpdateBookingAsync(Guid id, Guid userId, Guid accommodationId, DateTime chekInDate, DateTime checkOutDate)
         {
-            return await _repository.UpdateBookingAsync(booking);
+            return await _repository.UpdateBookingAsync(id,userId,accommodationId,chekInDate,checkOutDate);
         }
 
         public async Task<Guid> DeleteBookingAsync(Guid bookingId)

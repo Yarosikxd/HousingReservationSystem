@@ -7,7 +7,7 @@ namespace HousingReservationSystemApplication.Interfaces
         Task<Guid> CreateBookingAsync(Booking booking);
         Task<Booking> GetBookingByIdAsync(Guid bookingId);
         Task<List<Booking>> GetAllBookingsAsync();
-        Task<Guid> UpdateBookingAsync(Guid id,Booking booking);
+        Task<Guid> UpdateBookingAsync(Guid id, Guid userId, Guid accommodationId, DateTime chekInDate, DateTime checkOutDate);
         Task<Guid> DeleteBookingAsync(Guid bookingId);
     }
 }

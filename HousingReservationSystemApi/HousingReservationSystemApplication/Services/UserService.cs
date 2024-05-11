@@ -1,4 +1,5 @@
-﻿using HousingReservationSystemDomain.Abstraction.Auth;
+﻿using HousingReservationSystemApplication.Interfaces;
+using HousingReservationSystemDomain.Abstraction.Auth;
 using HousingReservationSystemDomain.Abstraction.Repository;
 using HousingReservationSystemDomain.Models;
 

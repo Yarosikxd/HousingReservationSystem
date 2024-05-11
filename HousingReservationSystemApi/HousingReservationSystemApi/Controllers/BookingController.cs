@@ -1,5 +1,4 @@
-﻿using HousingReservationSystemApi.Contracts.Accommodation;
-using HousingReservationSystemApi.Contracts.Booking;
+﻿using HousingReservationSystemApi.Contracts.Booking;
 using HousingReservationSystemApplication.Interfaces;
 using HousingReservationSystemDomain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -46,11 +45,18 @@ namespace HousingReservationSystemApi.Controllers
             return Ok(bookingId);
         }
 
-        //[HttpPut("Update {id}")]
-        //public async Task<IActionResult> UpdateBookingAsync(Guid id, UpdateBookingRequest request)
-        //{
-        //    await _service.UpdateBookingAsync(id,request.UserId, request.AccommodationId, request.CheckInDate, request.CheckOutDate);
-        //    return Ok();
-        //}
+        [HttpPut("Update {id}")]
+        public async Task<IActionResult> UpdateBookingAsync(Guid id, UpdateBookingRequest request)
+        {
+            await _service.UpdateBookingAsync(id, request.UserId, request.AccommodationId, request.CheckInDate, request.CheckOutDate);
+            return Ok();
+        }
+
+        [HttpDelete("Delete {id}")]
+        public async Task<IActionResult> DeleteBookingAsync(Guid id)
+        {
+            await _service.DeleteBookingAsync(id);
+            return Ok();
+        }
     }
 }

@@ -18,71 +18,106 @@ namespace HousingReservationSystemDataAccess.Repositoryes
         }
         public async Task<Guid> CreateBookingAsync(Booking booking)
         {
-            var bookingId = Guid.NewGuid(); 
-
-            var bookingEntity = new BookingEntity
+            try
             {
-                Id = bookingId,
-                UserId = booking.UserId,
-                AccommodationId = booking.AccommodationId,
-                CheckInDate = booking.CheckInDate,
-                CheckOutDate = booking.CheckOutDate
-            };
+                var bookingId = Guid.NewGuid();
 
-            await _context.Bookings.AddAsync(bookingEntity);
-            await _context.SaveChangesAsync();
+                var bookingEntity = new BookingEntity
+                {
+                    Id = bookingId,
+                    UserId = booking.UserId,
+                    AccommodationId = booking.AccommodationId,
+                    CheckInDate = booking.CheckInDate,
+                    CheckOutDate = booking.CheckOutDate
+                };
 
-            return bookingEntity.Id;
+                await _context.Bookings.AddAsync(bookingEntity);
+                await _context.SaveChangesAsync();
+
+                return bookingEntity.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to create booking", ex);
+            }
         }
 
         public async Task<Guid> DeleteBookingAsync(Guid bookingId)
         {
-            var bookingEntity = await _context.Bookings.FindAsync(bookingId);
-            if (bookingEntity != null)
+            try
             {
-                _context.Bookings.Remove(bookingEntity);
-                await _context.SaveChangesAsync();
-            }
+                var bookingEntity = await _context.Bookings.FindAsync(bookingId);
+                if (bookingEntity != null)
+                {
+                    _context.Bookings.Remove(bookingEntity);
+                    await _context.SaveChangesAsync();
+                }
 
-            return bookingId;
+                return bookingId;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to delete booking with id {bookingId}", ex);
+            }
         }
 
         public async Task<List<Booking>> GetAllBookingsAsync()
         {
-            var bookingEntities = await _context.Bookings.ToListAsync();
-            return bookingEntities.Select(b => Booking.Create(
-                b.Id, 
-                b.UserId, 
-                b.AccommodationId,
-                b.CheckInDate, 
-                b.CheckOutDate))
-                .ToList();
+            try
+            {
+                var bookingEntities = await _context.Bookings.ToListAsync();
+                return bookingEntities.Select(b => Booking.Create(
+                    b.Id,
+                    b.UserId,
+                    b.AccommodationId,
+                    b.CheckInDate,
+                    b.CheckOutDate))
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to retrieve all bookings", ex);
+            }
         }
 
         public async Task<Booking> GetBookingByIdAsync(Guid bookingId)
         {
-           BookingEntity bookingEntity = await _context.Bookings
-                .AsNoTracking()
-                .FirstOrDefaultAsync(b => b.Id == bookingId);
+            try
+            {
+                BookingEntity bookingEntity = await _context.Bookings
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(b => b.Id == bookingId);
 
-            Booking booking = _mapper.Map<Booking>(bookingEntity);
+                Booking booking = _mapper.Map<Booking>(bookingEntity);
 
-            return booking;
+                return booking;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to retrieve booking with id {bookingId}", ex);
+            }
         }
 
-        public async Task<Guid> UpdateBookingAsync(Booking booking)
+        public async Task<Guid> UpdateBookingAsync(Guid id, Guid userId, Guid accommodationId, DateTime chekInDate, DateTime checkOutDate)
         {
-            var bookingEntity = await _context.Bookings.FindAsync(booking.Id);
-            if (bookingEntity != null)
+            try
             {
-                bookingEntity.UserId = booking.UserId;
-                bookingEntity.AccommodationId = booking.AccommodationId;
-                bookingEntity.CheckInDate = booking.CheckInDate;
-                bookingEntity.CheckOutDate = booking.CheckOutDate;
-                await _context.SaveChangesAsync();
-            }
+                var bookingEntity = await _context.Bookings.FindAsync(id);
+                if (bookingEntity != null)
+                {
+                    bookingEntity.UserId = userId;
+                    bookingEntity.AccommodationId = accommodationId;
+                    bookingEntity.CheckInDate = chekInDate;
+                    bookingEntity.CheckOutDate = checkOutDate;
+                    await _context.SaveChangesAsync();
+                }
 
-            return booking.Id;
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to update booking with id {id}", ex);
+            }
         }
     }
 }

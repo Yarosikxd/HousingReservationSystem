@@ -19,66 +19,102 @@ namespace HousingReservationSystemDataAccess.Repositoryes
 
         public async Task<List<Accommodation>> GetAllAccommodationAsync()
         {
-            var accommodationEntities = await _context.Accommodations
-                .AsNoTracking()
-                .ToListAsync();
+            try
+            {
+                var accommodationEntities = await _context.Accommodations
+                    .AsNoTracking()
+                    .ToListAsync();
 
-            var accommodations = accommodationEntities
-                .Select(a => Accommodation.Create(a.Id, a.Name, a.Location))
-                .ToList();
+                var accommodations = accommodationEntities
+                    .Select(a => Accommodation.Create(a.Id, a.Name, a.Location))
+                    .ToList();
 
-            return accommodations;
+                return accommodations;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to get all accommodations", ex);
+            }
         }
 
         public async Task<Accommodation> GetAccommodationByIdAsync(Guid accommodationId)
         {
-            AccommodationEntity accommodationEntity = await _context.Accommodations
-           .AsNoTracking()
-           .FirstOrDefaultAsync(a => a.Id == accommodationId);
+            try
+            {
+                AccommodationEntity accommodationEntity = await _context.Accommodations
+                   .AsNoTracking()
+                   .FirstOrDefaultAsync(a => a.Id == accommodationId);
 
-            Accommodation accommodation = _mapper.Map<Accommodation>(accommodationEntity);
+                Accommodation accommodation = _mapper.Map<Accommodation>(accommodationEntity);
 
-            return accommodation;
+                return accommodation;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to get accommodation with id {accommodationId}", ex);
+            }
         }
 
         public async Task<Guid> CreateAccommodationAsync(Accommodation accommodation)
         {
-            var accommodationId = Guid.NewGuid();
-
-            var accommodationEntity = new AccommodationEntity
+            try
             {
-                Id = accommodationId,
-                Location = accommodation.Location,
-                Name = accommodation.Name,
-            };
+                var accommodationId = Guid.NewGuid();
 
-            await _context.Accommodations.AddAsync(accommodationEntity);
-            await _context.SaveChangesAsync();
+                var accommodationEntity = new AccommodationEntity
+                {
+                    Id = accommodationId,
+                    Location = accommodation.Location,
+                    Name = accommodation.Name,
+                };
 
-            return accommodationEntity.Id;
+                await _context.Accommodations.AddAsync(accommodationEntity);
+                await _context.SaveChangesAsync();
+
+                return accommodationEntity.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to create accommodation", ex);
+            }
         }
 
-        public async Task<Guid> UpdateAccommodationAsync (Guid id, string name, string location)
+        public async Task<Guid> UpdateAccommodationAsync(Guid id, string name, string location)
         {
-            var accommodation = await _context.Accommodations.FindAsync(id);
-            if(accommodation != null)
+            try
             {
-                accommodation.Name = name;
-                accommodation.Location = location;
-                await _context.SaveChangesAsync();
+                var accommodation = await _context.Accommodations.FindAsync(id);
+                if (accommodation != null)
+                {
+                    accommodation.Name = name;
+                    accommodation.Location = location;
+                    await _context.SaveChangesAsync();
+                }
+                return id;
             }
-            return id;
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to update accommodation with id {id}", ex);
+            }
         }
 
         public async Task<Guid> DeleteAccommodationAsync(Guid id)
         {
-            var accommodation = await _context.Accommodations.FindAsync(id);
-            if(accommodation != null)
+            try
             {
-                _context.Accommodations.Remove(accommodation);
-                await _context.SaveChangesAsync();
+                var accommodation = await _context.Accommodations.FindAsync(id);
+                if (accommodation != null)
+                {
+                    _context.Accommodations.Remove(accommodation);
+                    await _context.SaveChangesAsync();
+                }
+                return id;
             }
-            return id;
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to delete accommodation with id {id}", ex);
+            }
         }
     }
+
 }
