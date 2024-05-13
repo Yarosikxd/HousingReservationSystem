@@ -1,0 +1,5 @@
+﻿2024-05-13 10:07:24.9602|0|INFO|HousingReservationSystemApi.Controllers.UsersController|User logged in successfully 
+2024-05-13 10:14:16.8231|0|INFO|HousingReservationSystemApi.Controllers.UsersController|User registered successfully 
+2024-05-13 10:14:41.0915|0|INFO|HousingReservationSystemApi.Controllers.UsersController|User logged in successfully 
+2024-05-13 10:21:39.1200|0|INFO|HousingReservationSystemApi.Controllers.AccommodationsController|Retrieved all accommodations successfully 
+2024-05-13 10:21:46.4538|0|INFO|HousingReservationSystemApi.Controllers.BookingController|Retrieved all bookings successfully 

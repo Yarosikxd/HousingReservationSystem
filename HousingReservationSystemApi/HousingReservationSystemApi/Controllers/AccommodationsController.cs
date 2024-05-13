@@ -10,10 +10,12 @@ namespace HousingReservationSystemApi.Controllers
     public class AccommodationsController : ControllerBase
     {
         private readonly IAccommodationService _accommodationService;
+        private readonly ILogger<AccommodationsController> _logger;
 
-        public AccommodationsController(IAccommodationService accommodationService)
+        public AccommodationsController(IAccommodationService accommodationService, ILogger<AccommodationsController> logger) 
         {
             _accommodationService = accommodationService;
+            _logger = logger;
         }
 
         [HttpGet("GetAll")]
@@ -22,40 +24,67 @@ namespace HousingReservationSystemApi.Controllers
             try
             {
                 var accommodations = await _accommodationService.GetAllAccommodationAsync();
+                _logger.LogInformation("Retrieved all accommodations successfully"); 
                 return Ok(accommodations);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error retrieving all accommodations");
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateAccommodationAsync([FromBody]CreateAccommodationRequest request)
+        public async Task<IActionResult> CreateAccommodationAsync([FromBody] CreateAccommodationRequest request)
         {
-            var accommodation = Accommodation.Create(
-                Guid.NewGuid(),
-                request.Name,
-                request.Location);
+            try
+            {
+                var accommodation = Accommodation.Create(
+                    Guid.NewGuid(),
+                    request.Name,
+                    request.Location);
 
-            var accommodationId = await _accommodationService.CreateAccommodationAsync(accommodation);
-
-            return Ok(accommodationId);
+                var accommodationId = await _accommodationService.CreateAccommodationAsync(accommodation);
+                _logger.LogInformation("Accommodation created successfully"); 
+                return Ok(accommodationId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating accommodation");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPut("Update {id}")]
         public async Task<IActionResult> UpdateAccommodationAsync(Guid id, UpdateAccommodationRequest request)
         {
-            await _accommodationService.UpdateAccommodationAsync(id, request.Name, request.Location);
-            return Ok();
+            try
+            {
+                await _accommodationService.UpdateAccommodationAsync(id, request.Name, request.Location);
+                _logger.LogInformation($"Accommodation with ID {id} updated successfully"); 
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating accommodation");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpDelete("Delete {id}")]
         public async Task<IActionResult> DeleteAccommodationAsync(Guid id)
         {
-            await _accommodationService.DeleteAccommodationAsync(id);
-            return Ok();
+            try
+            {
+                await _accommodationService.DeleteAccommodationAsync(id);
+                _logger.LogInformation($"Accommodation with ID {id} deleted successfully"); 
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting accommodation");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
-
     }
 }

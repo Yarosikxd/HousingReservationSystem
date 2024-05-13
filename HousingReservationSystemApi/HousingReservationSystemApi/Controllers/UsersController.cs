@@ -8,10 +8,12 @@ namespace HousingReservationSystemApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
+        private  readonly ILogger<UsersController> _logger;
 
-        public UsersController(UserService userService)
+        public UsersController(UserService userService, ILogger<UsersController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         [HttpPost("register")]
@@ -20,10 +22,12 @@ namespace HousingReservationSystemApi.Controllers
             try
             {
                 await _userService.Register(userName, email, password);
+                _logger.LogInformation("User registered successfully");
                 return Ok("User registered successfully");
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Registration failed");
                 return BadRequest($"Registration failed: {ex.Message}");
             }
         }
@@ -34,10 +38,12 @@ namespace HousingReservationSystemApi.Controllers
             try
             {
                 var token = await _userService.Login(email, password);
+                _logger.LogInformation("User logged in successfully");
                 return Ok(token);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Login failed");
                 return BadRequest($"Login failed: {ex.Message}");
             }
         }

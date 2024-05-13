@@ -66,13 +66,7 @@ namespace HousingReservationSystemDataAccess.Repositoryes
             try
             {
                 var bookingEntities = await _context.Bookings.ToListAsync();
-                return bookingEntities.Select(b => Booking.Create(
-                    b.Id,
-                    b.UserId,
-                    b.AccommodationId,
-                    b.CheckInDate,
-                    b.CheckOutDate))
-                    .ToList();
+                return bookingEntities.Select(b => _mapper.Map<Booking>(b)).ToList();
             }
             catch (Exception ex)
             {

@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousingReservationSystemDom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousingReservationSystemDataAccess", "HousingReservationSystemDataAccess\HousingReservationSystemDataAccess.csproj", "{2346CE60-AA0E-428D-9C2F-35E5BD98C288}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HousingReservationSystemApplication", "HousingReservationSystemApplication\HousingReservationSystemApplication.csproj", "{1DD6076E-6463-4A47-94E9-1B102E57056D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousingReservationSystemApplication", "HousingReservationSystemApplication\HousingReservationSystemApplication.csproj", "{1DD6076E-6463-4A47-94E9-1B102E57056D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HousingReservationSystemInfrastucture", "HousingReservationSystemInfrastucture\HousingReservationSystemInfrastucture.csproj", "{4A6D3BA7-87F4-4AF2-A3F9-25B9F5E36778}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousingReservationSystemInfrastucture", "HousingReservationSystemInfrastucture\HousingReservationSystemInfrastucture.csproj", "{4A6D3BA7-87F4-4AF2-A3F9-25B9F5E36778}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HousingReservationSystemUnitTests", "HousingReservationSystemUnitTests\HousingReservationSystemUnitTests.csproj", "{FEB90406-CB69-48C0-B145-B4D2F94A5D3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{4A6D3BA7-87F4-4AF2-A3F9-25B9F5E36778}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A6D3BA7-87F4-4AF2-A3F9-25B9F5E36778}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A6D3BA7-87F4-4AF2-A3F9-25B9F5E36778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB90406-CB69-48C0-B145-B4D2F94A5D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB90406-CB69-48C0-B145-B4D2F94A5D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB90406-CB69-48C0-B145-B4D2F94A5D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB90406-CB69-48C0-B145-B4D2F94A5D3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,9 +25,7 @@ namespace HousingReservationSystemDataAccess.Repositoryes
                     .AsNoTracking()
                     .ToListAsync();
 
-                var accommodations = accommodationEntities
-                    .Select(a => Accommodation.Create(a.Id, a.Name, a.Location))
-                    .ToList();
+                var accommodations = _mapper.Map<List<Accommodation>>(accommodationEntities);
 
                 return accommodations;
             }
@@ -116,5 +114,4 @@ namespace HousingReservationSystemDataAccess.Repositoryes
             }
         }
     }
-
 }
