@@ -5,7 +5,7 @@ using HousingReservationSystemDomain.Models;
 
 namespace HousingReservationSystemApplication.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IPasswordHasher _passwordHasher;
         private readonly IUserRepository _userRepository;

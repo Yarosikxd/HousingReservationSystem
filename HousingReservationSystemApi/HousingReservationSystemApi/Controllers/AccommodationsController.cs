@@ -9,12 +9,12 @@ namespace HousingReservationSystemApi.Controllers
     [Route("api/[controller]")]
     public class AccommodationsController : ControllerBase
     {
-        private readonly IAccommodationService _accommodationService;
+        private readonly IAccommodationService _service;
         private readonly ILogger<AccommodationsController> _logger;
 
-        public AccommodationsController(IAccommodationService accommodationService, ILogger<AccommodationsController> logger) 
+        public AccommodationsController(IAccommodationService service, ILogger<AccommodationsController> logger) 
         {
-            _accommodationService = accommodationService;
+            _service = service;
             _logger = logger;
         }
 
@@ -23,7 +23,7 @@ namespace HousingReservationSystemApi.Controllers
         {
             try
             {
-                var accommodations = await _accommodationService.GetAllAccommodationAsync();
+                var accommodations = await _service.GetAllAccommodationAsync();
                 _logger.LogInformation("Retrieved all accommodations successfully"); 
                 return Ok(accommodations);
             }
@@ -44,7 +44,7 @@ namespace HousingReservationSystemApi.Controllers
                     request.Name,
                     request.Location);
 
-                var accommodationId = await _accommodationService.CreateAccommodationAsync(accommodation);
+                var accommodationId = await _service.CreateAccommodationAsync(accommodation);
                 _logger.LogInformation("Accommodation created successfully"); 
                 return Ok(accommodationId);
             }
@@ -60,7 +60,7 @@ namespace HousingReservationSystemApi.Controllers
         {
             try
             {
-                await _accommodationService.UpdateAccommodationAsync(id, request.Name, request.Location);
+                await _service.UpdateAccommodationAsync(id, request.Name, request.Location);
                 _logger.LogInformation($"Accommodation with ID {id} updated successfully"); 
                 return Ok();
             }
@@ -76,7 +76,7 @@ namespace HousingReservationSystemApi.Controllers
         {
             try
             {
-                await _accommodationService.DeleteAccommodationAsync(id);
+                await _service.DeleteAccommodationAsync(id);
                 _logger.LogInformation($"Accommodation with ID {id} deleted successfully"); 
                 return Ok();
             }

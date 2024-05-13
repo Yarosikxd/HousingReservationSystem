@@ -1,4 +1,5 @@
-﻿using HousingReservationSystemApplication.Services;
+﻿using HousingReservationSystemApplication.Interfaces;
+using HousingReservationSystemApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HousingReservationSystemApi.Controllers
@@ -7,12 +8,12 @@ namespace HousingReservationSystemApi.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _service;
         private  readonly ILogger<UsersController> _logger;
 
-        public UsersController(UserService userService, ILogger<UsersController> logger)
+        public UsersController(IUserService service, ILogger<UsersController> logger)
         {
-            _userService = userService;
+            _service = service;
             _logger = logger;
         }
 
@@ -21,7 +22,7 @@ namespace HousingReservationSystemApi.Controllers
         {
             try
             {
-                await _userService.Register(userName, email, password);
+                await _service.Register(userName, email, password);
                 _logger.LogInformation("User registered successfully");
                 return Ok("User registered successfully");
             }
@@ -37,7 +38,7 @@ namespace HousingReservationSystemApi.Controllers
         {
             try
             {
-                var token = await _userService.Login(email, password);
+                var token = await _service.Login(email, password);
                 _logger.LogInformation("User logged in successfully");
                 return Ok(token);
             }
